@@ -1,4 +1,4 @@
-# Root interface
+# Group Root
 
 To discover the URIs to the various interfaces of Cumulocity, a "root"
 interface is provided. This root interface aggregates all the underlying
