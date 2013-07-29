@@ -52,7 +52,8 @@ HTTP, you can emulate the other methods through an additional
 specifying the actual REST method to be executed. For example, to
 emulate the "PUT" (modify) method, you can use:
 
-    POST ...X-HTTP-METHOD: PUT
+    POST ...
+    X-HTTP-METHOD: PUT
 
 ### Processing mode
 
@@ -129,88 +130,73 @@ codes as well (e.g., 4xx). The response body can contain more
 information about the error, see the error media type definition below.
 General error interpretations are:
 
-Code
-
-Name
-
-Description
-
-400
-
-Bad Request
-
-The request could not be understood by the server due to malformed
-syntax. The client SHOULD NOT repeat the request without modifications.
-
-401
-
-Unauthorized
-
-Authentication has failed, or credential were required but not provided.
-
-403
-
-Forbidden
-
-You are not authorized to access the API.
-
-404
-
-Not Found
-
-Resource not found at given location.
-
-405
-
-Method not allowed
-
-The employed HTTP method cannot be used on this resource (e.g., using
-"POST" on a read-only resource).
-
-409
-
-Update Conflict
-
-Conflict on resource update, entity was changed in the meantime.
-
-409
-
-Duplicate
-
-The entity already exists in the data source.
-
-422
-
-Invalid Data
-
-General error with entity data format.
-
-422
-
-Non Unique Result
-
-Resource constraints error. Non-unique result from the query.
-
-422
-
-Unprocessable entity
-
-Resource cannot be processed.
-
-500
-
-Internal Server Error
-
-An internal error in the software system has occurred and the request
-could not be processed.
-
-503
-
-Service Unavailable
-
-The service is currently not available. This may be caused by an
-overloaded instance or it is down for maintenance. Please try it again
-in a few minutes.
+<table>
+<tr>
+<th>Code</th>
+<th>Name</th>
+<th>Description</th>
+</tr>
+<tr>
+<td>400</td>
+<td>Bad Request</td>
+<td>The request could not be understood by the server due to malformed syntax. The client SHOULD NOT repeat the request without modifications.</td>
+</tr>
+<tr>
+<td>401</td>
+<td>Unauthorized</td>
+<td>Authentication has failed, or credential were required but not provided.</td>
+</tr>
+<tr>
+<td>403</td>
+<td>Forbidden</td>
+<td>You are not authorized to access the API.</td>
+</tr>
+<tr>
+<td>404</td>
+<td>Not Found</td>
+<td>Resource not found at given location.</td>
+</tr>
+<tr>
+<td>405</td>
+<td>Method not allowed</td>
+<td>The employed HTTP method cannot be used on this resource (e.g., using "POST" on a read-only resource).</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Update Conflict</td>
+<td>Conflict on resource update, entity was changed in the meantime.</td>
+</tr>
+<tr>
+<td>409</td>
+<td>Duplicate</td>
+<td>The entity already exists in the data source.</td>
+</tr>
+<tr>
+<td>422</td>
+<td>Invalid Data</td>
+<td>General error with entity data format.</td>
+</tr>
+<tr>
+<td>422</td>
+<td>Non Unique Result</td>
+<td>Resource constraints error. Non-unique result from the query.</td>
+</tr>
+<tr>
+<td>422</td>
+<td>Unprocessable entity</td>
+<td>Resource cannot be processed.</td>
+</tr>
+<tr>
+<td>500</td>
+<td>Internal Server Error</td>
+<td>An internal error in the software system has occurred and the request could not be processed.</td>
+</tr>
+<tr>
+<td>503</td>
+<td>Service Unavailable</td>
+<td>The service is currently not available. This may be caused by an overloaded instance or it is down for maintenance. Please try it again in a few minutes.</td>
+</tr>
+</table>
 
 ## REST usage
 
@@ -303,124 +289,6 @@ example response for managed object collections:
 Total pages for querying by keys/range: To get totalPages calculated in
 case of querying by keys/by range, an additional query param has to be
 passed: "withTotalPages=true". Otherwise totalPages is set to null.
-
-## Root interface
-
-To discover the URIs to the various interfaces of Cumulocity, a "root"
-interface is provided. This root interface aggregates all the underlying
-API resources. The root interface of the development sandbox is
-accessible through http://«sandbox URL»/platform/. For more information
-on the different API resources, please consult the respective API
-section of this reference guide. Usage of the development sandbox is
-subject to the [usage
-terms](guides/reference-guide/developer-sandbox-usage-terms).
-
-### Platform [application/vnd.com.nsn.cumulocity.platformApi+json]
-
-Name
-
-Type
-
-Occurs
-
-Description
-
-self
-
-URI
-
-1
-
-Link to this Resource
-
-inventory
-
-InventoryAPI
-
-1
-
-See [inventory](index.php?option=com_k2&view=item&id=828) interface.
-
-identity
-
-IdentityAPI
-
-1
-
-See [identity](index.php?option=com_k2&view=item&id=823) interface.
-
-event
-
-EventAPI
-
-1
-
-See [event](index.php?option=com_k2&view=item&id=827) interface.
-
-measurement
-
-MeasurementAPI
-
-1
-
-See [measurement](index.php?option=com_k2&view=item&id=826) interface.
-
-audit
-
-AuditAPI
-
-1
-
-See [auditing](index.php?option=com_k2&view=item&id=821) interface.
-
-alarm
-
-AlarmAPI
-
-1
-
-See [alarm](index.php?option=com_k2&view=item&id=824) interface.
-
-user
-
-UserAPI
-
-1
-
-See [user](index.php?option=com_k2&view=item&id=822) interface.
-
-deviceControl
-
-DeviceControlAPI
-
-1
-
-See [device control](index.php?option=com_k2&view=item&id=825)
-interface.
-
-### GET the Platform resource
-
-Response body: application/vnd.com.nsn.cumulocity.platformApi+json
-
-Example response:
-
-    HTTP/1.1 200 OK
-    Content-Type: application/vnd.com.nsn.cumulocity.platformApi+json;…
-    Content-Length: …
-     
-    {
-      "self" : "«URL to the platform API resource»",
-      "event" : {
-        "self" : "«URL to the event API resource»",
-        "events" : { "self" : "«URL to event collection resource»" },
-        "eventsForSourceAndType" : "«URL to event collection resource»?type={type}&source={source}"
-        …
-      },
-      "inventory" : {
-        …
-      },
-      …
-    }
 
 ## Generic media types
 
